@@ -1,0 +1,7 @@
+<FilesMatch "^\.htaccess$">
+    Deny from all
+</FilesMatch>
+
+# Autoriser l'accès aux assets
+Order Allow,Deny
+Allow from all
