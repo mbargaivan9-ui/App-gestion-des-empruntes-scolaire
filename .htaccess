@@ -1,0 +1,52 @@
+# Autoriser l'accès par défaut
+<FilesMatch "^\.htaccess$">
+    Deny from all
+</FilesMatch>
+
+# Autoriser l'accès à tous les fichiers et répertoires
+<Directory />
+    Allow from all
+</Directory>
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /biblio_app/
+    
+    # Désactiver l'affichage du répertoire
+    Options -Indexes
+    
+    # Ne pas réécrire les fichiers et répertoires existants
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Réécrire les URLs (optionnel)
+    RewriteRule ^index/?$ index.php [L]
+    RewriteRule ^dashboard/?$ dashboard.php [L]
+    RewriteRule ^login/?$ login.php [L]
+    RewriteRule ^register/?$ register.php [L]
+    RewriteRule ^logout/?$ logout.php [L]
+    RewriteRule ^profile/?$ profile.php [L]
+</IfModule>
+
+# Permettre l'accès aux fichiers statiques et répertoires
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|txt|php|html)$">
+    Allow from all
+</FilesMatch>
+
+# Compression gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# Cache Control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+</IfModule>
+
